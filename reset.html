@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>WECBR Student Partner</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   <link rel="stylesheet" type="text/css" href="./register.css">
+   <script src="register2.js"></script>
+</head>
+<body>
+   <div class="row">
+      <div class="col-md-1 pl-6 ">
+         <img src="./logo.png" alt="Girl in a jacket" style="width:100px; height:100%;">
+      </div>
+      <div class="col-md-4 mt-4 bl-0">
+         <h4 class=" heading">WECBR Quiz Section</h4>
+      </div>
+      <div class="col-md-7">
+      </div>
+   </div>
+   <div class="row bgbody">
+
+      <div class="col-md-1">
+      </div>
+
+      <div class="col-md-5 pl-0 ml-0 bl-0 bgimage">
+
+      </div>
+      <div class="col-md-5">
+         <div class="jumbotron pb-0" id="jumbotronnew">
+            <h1>Welcome To WECBR :)</h1>
+            <p class="lead"> Reset Your Password</p>
+         </div>
+         <form action="#" onsubmit="return validation()">
+            <div class="form-group">
+               <label class="font-weight-bold"> Password: </label>
+               <input type="password" name="pass" class="form-control" id="pass" autocomplete="off">
+               <span id="passwords" class="text-danger font-weight-bold"> </span>
+            </div>
+            <div class="form-group">
+               <label class="font-weight-bold"> Confirm Password: </label>
+               <input type="password" name="conpass" class="form-control" id="conpass" autocomplete="off">
+               <span id="confrmpass" class="text-danger font-weight-bold"> </span>
+            </div>
+            <div class="form-group">
+               <input type="checkbox" onclick="myFunction()">
+               <label class="font-weight-bold">Show Password</label>
+            </div>
+            <input type="submit" name="submit" value="submit" class="btn btn-danger" autocomplete="off">
+         </form><br><br>
+         <div class="col-md-1">
+         </div>
+</body>
+
+</html>
