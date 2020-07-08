@@ -1,2 +1,2 @@
 # WeCBR_Quiz_Login
-Login Page with Passport.js
+Complete LoginPage with Cookies using Passport.js
