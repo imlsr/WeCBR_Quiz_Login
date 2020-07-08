@@ -95,11 +95,11 @@ app.post("/quiz/login" , function(req , res){
       console.log(err);
     } else {
       passport.authenticate("local")(req , res , function(){
-        res.redirect("/quiz/dashboard")
+        res.redirect("/quiz/dashboard");
+      });
     }
-  })
-
-})
+  });
+});
 //ROUTES-POST-END
 
 
