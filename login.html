@@ -38,10 +38,10 @@
                      <h1>Welcome To WECBR :)</h1>
                      <p class="lead"> Please Login Here With Your Information.</p>
                   </div>
-                  <form action="#" onsubmit="return validation()" class="basic">
+                  <form action="/quiz/login" onsubmit="return validation()" class="basic" method="POST">
                      <div class="form-group">
                         <label class="font-weight-bold" for="exampleInputEmail">Email</label>
-                        <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email ID" required>
+                        <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email ID" name="email" required>
                         <small id="emailHelp" class="form-text text-muted ">We'll never share your email with anyone
                            else.</small>
                      </div>
