@@ -80,7 +80,7 @@ app.get("/logout", function(req, res){
 
 app.post("/register", function(req, res){
 
-  User.register({username: req.body.username}, req.body.password, function(err, user){
+  User.register({username: req.body.username, firstName:req.body.firstName, lastName:req.body.lastName}, req.body.password, function(err, user){
     if (err) {
       console.log(err);
       res.redirect("/register");
