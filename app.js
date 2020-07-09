@@ -1,18 +1,23 @@
 //jshint esversion:6
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
-const passport = require("passport")
+const ejs = require("ejs");
 const mongoose = require("mongoose");
-const session = require("express-session");
+const session = require('express-session');
+const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 
 const app = express();
 
-app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.static("public"));
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 app.use(session({
-  secret: "wecbr-quiz-login",
+  secret: "Our little secret.",
   resave: false,
   saveUninitialized: false
 }));
@@ -20,91 +25,99 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb://localhost:27017/UserDB", {useNewUrlParser : true});
-mongoose.set("useCreateIndex", true);
+mongoose.connect("mongodb://localhost:27017/user2DB", {useNewUrlParser: true});
 
-const userSchema = new mongoose.Schema({
-  firstName : String,
-  lastName : String,
-  username : String,
-  password : String
 
+const user2Schema = new mongoose.Schema ({
+  email: String,
+  password: String,
+  firstName: String,
+  lastName: String
 });
 
-userSchema.plugin(passportLocalMongoose);
+user2Schema.plugin(passportLocalMongoose);
 
-const User = new mongoose.model("User", userSchema);
+
+const User = new mongoose.model("User", user2Schema);
 
 passport.use(User.createStrategy());
 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-
-
-
-
-
-//ROUTES-GET-START
-app.get("/quiz/login" , function(req , res){
-  res.sendFile(__dirname + '/login.html');
-})
-
-app.get("/quiz/register" , function(req , res){
-  res.sendFile(__dirname + '/register.html');
-})
-
-app.get("/quiz/dashboard" , function(req, res){
-  if(req.isAuthenticated()){
-    //Open Dashboard
-  }else {
-    res.redirect("/quiz/login");
-  }
-
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
 });
-//ROUTES-GET-END
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
 
 
 
+app.get("/", function(req, res){
+  res.render("home");
+});
 
-//ROUTES-POST-START
-app.post("/quiz/register" , function(req , res){
 
-  User.register({username:req.body.email , firstName : req.body.firstName , lastName : req.body.lastName }, req.body.pass , function(err, user){
-    if(err) {
+
+app.get("/login", function(req, res){
+  res.render("login");
+});
+
+app.get("/register", function(req, res){
+  res.render("register");
+});
+
+app.get("/secrets", function(req, res){
+  res.render("secrets");
+});
+
+
+app.get("/logout", function(req, res){
+  req.logout();
+  res.redirect("/");
+});
+
+app.post("/register", function(req, res){
+
+  User.register({username: req.body.username}, req.body.password, function(err, user){
+    if (err) {
       console.log(err);
-      res.redirect("/quiz/register");
-    }else{
-      passport.authenticate("local")(req , res , function(){
-        res.redirect("/quiz/dashboard")
+      res.redirect("/register");
+    } else {
+      passport.authenticate("local")(req, res, function(){
+        res.redirect("/secrets");
       });
     }
   });
 
 });
 
-app.post("/quiz/login" , function(req , res){
+app.post("/login", function(req, res){
 
   const user = new User({
-    username: req.body.email,
-    password: req.body.pass
+    username: req.body.username,
+    password: req.body.password
   });
 
   req.login(user, function(err){
-    if(err){
+    if (err) {
       console.log(err);
     } else {
-      passport.authenticate("local")(req , res , function(){
-        res.redirect("/quiz/dashboard");
+      passport.authenticate("local")(req, res, function(){
+        res.redirect("/secrets");
       });
     }
   });
+
 });
-//ROUTES-POST-END
 
 
 
 
 
-var port = process.env.port || 3000;
-app.listen(port);
+
+
+app.listen(3000, function() {
+  console.log("Server started on port 3000.");
+});
