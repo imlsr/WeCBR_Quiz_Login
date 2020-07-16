@@ -1,1 +1,1 @@
-Quiz Authentication for wecbr.co/Quiz
+A Fully Functional Quizzing System for wecbr.co/quiz 
