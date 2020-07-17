@@ -23,7 +23,7 @@ router.get("/register", function(req, res){
   
 //     
 router.get("/dashboard", function(req, res){
-    res.render("quiz/index");
+    res.render("dashboard");
 });
   
   
@@ -41,7 +41,7 @@ router.post("/register", function(req, res){
         res.redirect("/register");
       } else {
         passport.authenticate("local")(req, res, function(){
-          res.redirect("/");
+          res.redirect("/dashboard");
         });
       }
     });
@@ -59,7 +59,7 @@ router.post("/login", function(req, res){
         console.log(err);
       } else {
         passport.authenticate("local")(req, res, function(){
-          res.redirect("/");
+          res.redirect("/dashboard");
         });
       }
     });
