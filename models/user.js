@@ -5,7 +5,9 @@ const user2Schema = new mongoose.Schema ({
     email: String,
     password: String,
     firstName: String,
-    lastName: String
+    lastName: String,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
   });
   
 user2Schema.plugin(passportLocalMongoose);
