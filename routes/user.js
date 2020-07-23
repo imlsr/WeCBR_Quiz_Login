@@ -35,14 +35,15 @@ router.get("/logout", function(req, res){
 
 // Forgot Password
 router.get("/forgot" , function(req, res){
-    res.render("reset");
+    res.render("forgot");
 });
+
 
 //Reset Password
 router.get('/reset/:token', function(req, res) {
   User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
     if (!user) {
-      alert('error', 'Password reset token is invalid or has expired.');
+      alert('Password reset token is invalid or has expired.');
       return res.redirect('/forgot');
     }
     res.render('reset');
@@ -94,7 +95,7 @@ app.post('/forgot', function(req, res, next) {
     function(token, done) {
       User.findOne({ email: req.body.email }, function(err, user) {
         if (!user) {
-          alert('error', 'No account with that email address exists.');
+          alert('No account with that email address exists.');
           return res.redirect('/forgot');
         }
 
@@ -124,7 +125,7 @@ app.post('/forgot', function(req, res, next) {
           'If you did not request this, please ignore this email and your password will remain unchanged.\n'
       };
       smtpTransport.sendMail(mailOptions, function(err) {
-        alert('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+        alert('An e-mail has been sent to ' + user.email + ' with further instructions.');
         done(err, 'done');
       });
     }
@@ -141,7 +142,7 @@ app.post('/reset/:token', function(req, res) {
     function(done) {
       User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
         if (!user) {
-          alert('error', 'Password reset token is invalid or has expired.');
+          alert('Password reset token is invalid or has expired.');
           return res.redirect('back');
         }
 
@@ -172,7 +173,7 @@ app.post('/reset/:token', function(req, res) {
           'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
       };
       smtpTransport.sendMail(mailOptions, function(err) {
-        alert('success', 'Success! Your password has been changed.');
+        alert('Success! Your password has been changed.');
         done(err);
       });
     }
